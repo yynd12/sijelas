@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('keterangan');
             $table->date('tanggal');
             $table->enum('jenis', ['pemasukan', 'pengeluaran']);
+            
             $table->timestamps();
         });
     }

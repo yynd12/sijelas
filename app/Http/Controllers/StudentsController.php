@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Students;
+use app\Models\User;
+use app\Models\Student_class;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
-        //
+        $students = Students::with(['user','studentClass'])->get();
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -20,7 +21,8 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('students.create',['users' => user::all(),
+         'classes' => student_class::all()]);
     }
 
     /**
@@ -28,7 +30,18 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nis' => 'required|unique:students',
+            'nama' => 'required',
+            'jabatan' => 'required',
+            'student_class_id' => 'required|exists:student_classes_id',
+            'user_id' => 'required|exists:users_id',
+        ]);
+
+        Students::create($validated);
+
+        return redirect()->route('students.index')
+              ->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     /**

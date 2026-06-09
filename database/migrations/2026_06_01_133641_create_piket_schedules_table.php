@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_class_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('hari');
+            $table->text('anggota_piket');
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('tanggal');
             $table->string('bukti_foto');
+            $table->enum('status_kehadiran',['hadir','tidak_hadir']);
             $table->text('catatan')->nullable();
             $table->timestamps();
         });
