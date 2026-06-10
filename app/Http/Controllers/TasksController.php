@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\tasks;
+use App\Models\Student_class;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -12,7 +13,9 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = tasks::all();
+        
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -20,7 +23,9 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create', [
+            'classes' => Student_class::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,16 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student_class_id' => 'required',
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'deadline' => 'required|date',
+        ]);
+
+        tasks::create($validated);
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -44,7 +58,7 @@ class TasksController extends Controller
      */
     public function edit(tasks $tasks)
     {
-        //
+        return view('tasks.edit', compact('task'));
     }
 
     /**
@@ -52,7 +66,9 @@ class TasksController extends Controller
      */
     public function update(Request $request, tasks $tasks)
     {
-        //
+        $tasks->update($request->all());
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -60,6 +76,8 @@ class TasksController extends Controller
      */
     public function destroy(tasks $tasks)
     {
-        //
+        $tasks->delete();
+
+        return redirect()->route('tasks.index');
     }
 }

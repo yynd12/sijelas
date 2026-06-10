@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cashes;
+use App\Models\Student_class;
 use Illuminate\Http\Request;
 
 class CashesController extends Controller
@@ -12,7 +13,9 @@ class CashesController extends Controller
      */
     public function index()
     {
-        //
+        $cashes = Cashes::with('Student_class')->get();
+
+        return view('cashes.index', compact('cashes'));
     }
 
     /**
@@ -20,7 +23,9 @@ class CashesController extends Controller
      */
     public function create()
     {
-        //
+        return view('cashes.create', [
+            'classes' => Student_class::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,13 @@ class CashesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student_class_id' => 'required|exists::student_class,id'
+        ]);
+
+        Cashes::create($validated);
+
+        return redirect()->route('cashes.index');
     }
 
     /**
@@ -44,7 +55,7 @@ class CashesController extends Controller
      */
     public function edit(Cashes $cashes)
     {
-        //
+        return view('cashes.edit', compact('cash'));
     }
 
     /**
@@ -52,7 +63,9 @@ class CashesController extends Controller
      */
     public function update(Request $request, Cashes $cashes)
     {
-        //
+        $cashes->update($request->all());
+
+        return redirect()->route('cashes.index');
     }
 
     /**
@@ -60,6 +73,8 @@ class CashesController extends Controller
      */
     public function destroy(Cashes $cashes)
     {
-        //
+        $cashes->delete();
+
+        return redirect()->route('cashes.index');
     }
 }

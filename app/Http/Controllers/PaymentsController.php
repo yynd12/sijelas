@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payments;
+use App\Models\Cash_bills;
 use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
@@ -12,7 +13,9 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payments::with('cash_bills')->get();
+
+        return view('payments.index', compact('payments'));
     }
 
     /**
@@ -20,7 +23,9 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('payments.create', [
+            'bills' => Cash_bills::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,15 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'cash_bill_id' => 'required|exists:cash_bills,id',
+            'jumlah_bayar' => 'required|numeric',
+            'bukti_foto' => 'required',
+        ]);
+
+        Payments::create($validated);
+
+        return redirect()->route('payments.index');
     }
 
     /**
@@ -60,6 +73,8 @@ class PaymentsController extends Controller
      */
     public function destroy(Payments $payments)
     {
-        //
+        $payments->delete();
+
+        return redirect()->route('payments.index');
     }
 }

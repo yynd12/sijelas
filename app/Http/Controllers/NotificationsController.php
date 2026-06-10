@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\notifications;
+use App\Models\Students;
 use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
@@ -12,7 +13,9 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = notifications::with('student')->get();
+
+        return view('notifications.index', compact('notifications'));
     }
 
     /**
@@ -20,7 +23,9 @@ class NotificationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('notifications.create', [
+            'students' => Students::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,15 @@ class NotificationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'isi_notif' => 'required',
+            'jenis' => 'required',
+        ]);
+
+        notifications::create($validated);
+
+        return redirect()->route('notifications.index');
     }
 
     /**
@@ -60,6 +73,8 @@ class NotificationsController extends Controller
      */
     public function destroy(notifications $notifications)
     {
-        //
+        $notifications->delete();
+
+        return redirect()->route('notifications.index');
     }
 }

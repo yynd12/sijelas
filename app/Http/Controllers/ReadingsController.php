@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Readings;
+use App\Models\Students;
 use Illuminate\Http\Request;
 
 class ReadingsController extends Controller
@@ -12,7 +13,9 @@ class ReadingsController extends Controller
      */
     public function index()
     {
-        //
+        $readings = Readings::with('student')->get();
+
+        return view('readings.index', compact('readings'));
     }
 
     /**
@@ -20,7 +23,9 @@ class ReadingsController extends Controller
      */
     public function create()
     {
-        //
+        return view('readings.create', [
+            'students' => Students::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,14 @@ class ReadingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'bacaan_terakhir' => 'required',
+        ]);
+
+        Readings::create($validated);
+
+        return redirect()->route('readings.index');
     }
 
     /**
@@ -60,6 +72,8 @@ class ReadingsController extends Controller
      */
     public function destroy(Readings $readings)
     {
-        //
+        $readings->delete();
+
+        return redirect()->route('readings.index');
     }
 }

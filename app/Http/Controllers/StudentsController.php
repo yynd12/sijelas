@@ -49,7 +49,7 @@ class StudentsController extends Controller
      */
     public function show(Students $students)
     {
-        //
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -57,7 +57,11 @@ class StudentsController extends Controller
      */
     public function edit(Students $students)
     {
-        //
+        return view('students.edit', [
+            'student'=>$students,
+            'users'=> User::all(),
+            'classes'=> Student_class::all(),
+        ]);
     }
 
     /**
@@ -65,7 +69,17 @@ class StudentsController extends Controller
      */
     public function update(Request $request, Students $students)
     {
-        //
+        $validated = $request->validate([
+            'student_id' => 'required|unique:students,student_id,' . $students->id,
+            'nama' => 'required',
+            'jabatan' => 'required',
+            'student_class_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $students->update($validated);
+
+        return redirect()->route('students.index')->with('succes', 'Data siswa berhasil diupdate');
     }
 
     /**
@@ -73,6 +87,8 @@ class StudentsController extends Controller
      */
     public function destroy(Students $students)
     {
-        //
+        $students->delete();
+
+        return redirect()->route('students.index')->with('succes', 'Data berhasil dihapus');
     }
 }

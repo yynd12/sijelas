@@ -12,7 +12,9 @@ class StudentClassController extends Controller
      */
     public function index()
     {
-        //
+        $classes = Student_class::all();
+
+        return view('student_classes.index', compact('classes'));
     }
 
     /**
@@ -20,7 +22,7 @@ class StudentClassController extends Controller
      */
     public function create()
     {
-        //
+        return view('student_classes.create');
     }
 
     /**
@@ -28,23 +30,23 @@ class StudentClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama_kelas' => 'required',
+            'tahun_ajaran' => 'required',
+        ]);
+
+        Student_class::create($validated);
+
+        return redirect()->route('student_classes.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Student_class $student_class)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Student_class $student_class)
     {
-        //
+        return view('student_classes.edit', compact('student_class'));
     }
 
     /**
@@ -52,7 +54,10 @@ class StudentClassController extends Controller
      */
     public function update(Request $request, Student_class $student_class)
     {
-        //
+        $student_class->update($request->validate([
+            'nama_kelas' => 'required',
+            'tahun_ajaran' => 'required',
+        ]));
     }
 
     /**
@@ -60,6 +65,8 @@ class StudentClassController extends Controller
      */
     public function destroy(Student_class $student_class)
     {
-        //
+        $student_class->delete();
+
+        return redirect()->route('student_classes.index');
     }
 }

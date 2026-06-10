@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\announcements;
+use App\Models\Class_teacher;
+use App\Models\Student_class;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AnnouncementsController extends Controller
@@ -12,7 +15,10 @@ class AnnouncementsController extends Controller
      */
     public function index()
     {
-        //
+        $announcements = announcements::all();
+
+        return view('announcements.index', compact('annocuncements'));
+
     }
 
     /**
@@ -20,7 +26,9 @@ class AnnouncementsController extends Controller
      */
     public function create()
     {
-        //
+       $teachers = Class_teacher::all();
+
+       return view('announcements.create', compact('teachers'));
     }
 
     /**
@@ -28,7 +36,15 @@ class AnnouncementsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'class_teacher_id' => 'required',
+            'judul' => 'required',
+            'isi' => 'required',
+        ]);
+
+        announcements::create($validated);
+
+        return redirect()->route('announcements.index');
     }
 
     /**
@@ -44,7 +60,7 @@ class AnnouncementsController extends Controller
      */
     public function edit(announcements $announcements)
     {
-        //
+        return view('announcements.edit', compact('announcements'));
     }
 
     /**
@@ -52,7 +68,9 @@ class AnnouncementsController extends Controller
      */
     public function update(Request $request, announcements $announcements)
     {
-        //
+        $announcements->update($request->all());
+
+        return redirect()->route('announcements.index');
     }
 
     /**
@@ -60,6 +78,8 @@ class AnnouncementsController extends Controller
      */
     public function destroy(announcements $announcements)
     {
-        //
+        $announcements->delete();
+
+        return redirect()->route('announcements.index');
     }
 }

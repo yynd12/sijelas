@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Class_teacher;
+use App\Models\Student_class;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClassTeacherController extends Controller
@@ -12,7 +14,9 @@ class ClassTeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Class_teacher::with(['user', 'studentClass'])->get();
+
+        return view('class_teachers.index', compact('teachers'));
     }
 
     /**
@@ -20,7 +24,10 @@ class ClassTeacherController extends Controller
      */
     public function create()
     {
-        //
+        return view('class_teachers.create', [
+            'users' => User::all(),
+            'classes' => Student_class::all(),
+        ]);
     }
 
     /**
@@ -28,7 +35,16 @@ class ClassTeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'teacher_id' => 'required|unique:class_teacher',
+            'nama' => 'required',
+            'student_class_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        Class_teacher::create($validated);
+
+        return redirect()->route('class_teacher.index');
     }
 
     /**
@@ -44,7 +60,7 @@ class ClassTeacherController extends Controller
      */
     public function edit(Class_teacher $class_teacher)
     {
-        //
+        return view('class_teachers.edit', compact('classTeacher'));
     }
 
     /**
@@ -52,7 +68,7 @@ class ClassTeacherController extends Controller
      */
     public function update(Request $request, Class_teacher $class_teacher)
     {
-        //
+        $class_teacher->update($request->all());
     }
 
     /**
@@ -60,6 +76,8 @@ class ClassTeacherController extends Controller
      */
     public function destroy(Class_teacher $class_teacher)
     {
-        //
+        $class_teacher->delete();
+
+        return redirect()->route('class_teacher.index');
     }
 }

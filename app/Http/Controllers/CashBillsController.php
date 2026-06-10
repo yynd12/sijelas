@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cash_bills;
+use App\Models\Cashes;
+use App\Models\Students;
 use Illuminate\Http\Request;
 
 class CashBillsController extends Controller
@@ -12,7 +14,9 @@ class CashBillsController extends Controller
      */
     public function index()
     {
-        //
+        $cash_bills = Cash_bills::with(['student', 'cashes'])->get();
+
+        return view('cash_bills.index', compact('bills'));
     }
 
     /**
@@ -20,7 +24,10 @@ class CashBillsController extends Controller
      */
     public function create()
     {
-        //
+        return view('cash_bills.create', [
+            'students' => Students::all(),
+            'cashes' => Cashes::all(),
+        ]);
     }
 
     /**
@@ -28,7 +35,16 @@ class CashBillsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'student_id' => 'required|exists::students,id',
+            'cash_id' => 'required|exists::cashes,id',
+            'jumlah_tagihan' => 'required|numeric',
+            'status' => 'required',
+        ]);
+
+        Cash_bills::create($validated);
+
+        return redirect()->route('cash_bills.index');
     }
 
     /**
@@ -44,7 +60,7 @@ class CashBillsController extends Controller
      */
     public function edit(Cash_bills $cash_bills)
     {
-        //
+        return view('cash_bills.edit', compact('cash_bills'));
     }
 
     /**
@@ -52,7 +68,9 @@ class CashBillsController extends Controller
      */
     public function update(Request $request, Cash_bills $cash_bills)
     {
-        //
+        $cash_bills->update($request->all());
+
+        return redirect()->route('cash_bills.index');
     }
 
     /**
@@ -60,6 +78,8 @@ class CashBillsController extends Controller
      */
     public function destroy(Cash_bills $cash_bills)
     {
-        //
+        $cash_bills->delete();
+
+        return redirect()->route('cash_bills.index');
     }
 }

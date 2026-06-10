@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Piket_reports;
+use App\Models\Students;
 use Illuminate\Http\Request;
 
 class PiketReportsController extends Controller
@@ -12,7 +13,9 @@ class PiketReportsController extends Controller
      */
     public function index()
     {
-        //
+        $reports = Piket_reports::with('student')->get();
+
+        return view('piket_report.imdex', compact('reports'));
     }
 
     /**
@@ -20,7 +23,9 @@ class PiketReportsController extends Controller
      */
     public function create()
     {
-        //
+        return view('piket_reports.create', [
+            'students' => Students::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,15 @@ class PiketReportsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validated([
+            'student_id' => 'required',
+            'tanggal' => 'required|date',
+            'keterangan' => 'required',
+        ]);
+
+        Piket_reports::create($validated);
+
+        return redirect()->route('piket_reports.index');
     }
 
     /**
@@ -60,6 +73,8 @@ class PiketReportsController extends Controller
      */
     public function destroy(Piket_reports $piket_reports)
     {
-        //
+        $piket_reports->delete();
+
+        return redirect()->route('piket_report.index');
     }
 }
