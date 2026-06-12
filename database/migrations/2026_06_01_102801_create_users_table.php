@@ -16,7 +16,11 @@ return new class extends Migration
 
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('role',['super_admin','class_teacher','student']);
+            $table->enum('role', [
+                        'super_admin',
+                     'class_teacher',
+                    'student'
+            ]);
             $table->rememberToken();
             $table->timestamps();
         });
