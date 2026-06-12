@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('cash_bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('student_id')->constrained('cashes')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('cash_id')->constrained('cashes')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->decimal('jumlah_tagihan', 10, 2);
             $table->enum('status', ['lunas', 'belum'])->default('belum');
             $table->timestamps();
         });
