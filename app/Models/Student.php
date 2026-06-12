@@ -26,7 +26,7 @@ class Student extends Model
     }
 
     public function notifications(){
-        return $this->hasMany(Notifications::class);
+        return $this->hasMany(Notification::class);
     }
 
     public function piketReports(){
