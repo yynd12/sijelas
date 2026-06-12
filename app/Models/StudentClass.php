@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student_class extends Model
+class StudentClass extends Model
 {
     protected $fillable = [
         'nama_kelas',
@@ -12,23 +12,23 @@ class Student_class extends Model
     ];
     
     public function students(){
-        return $this->hasMany(Students::class);
+        return $this->hasMany(Student::class);
     }
 
     public function classTeachers(){
-        return $this->hasMany(Class_teacher::class);
+        return $this->hasMany(ClassTeacher::class);
     }
 
     public function tasks(){
-        return $this->hasMany(tasks::class);
+        return $this->hasMany(Task::class);
     }
 
     public function cashes(){
-        return $this->hasMany(Cashes::class);
+        return $this->hasMany(Cash::class);
     }
 
     public function piketSchedules(){
-        return $this->hasMany(Piket_schedules::class);
+        return $this->hasMany(PiketSchedule::class);
     }
 
 }

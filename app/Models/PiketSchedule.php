@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Piket_schedules extends Model
+class PiketSchedule extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class Piket_schedules extends Model
     ];
 
     public function studentClass(){
-        return $this->belongsTo(Students::class);
+        return $this->belongsTo(Student::class);
     }
 }

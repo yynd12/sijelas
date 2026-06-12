@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Students;
+
+use App\Models\Student;
 use app\Models\User;
-use app\Models\Student_class;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -12,7 +13,7 @@ class StudentsController extends Controller
    
     public function index()
     {
-        $students = Students::with(['user','studentClass'])->get();
+        $students = Student::with(['user','studentClass'])->get();
         return view('students.index', compact('students'));
     }
 
@@ -22,7 +23,7 @@ class StudentsController extends Controller
     public function create()
     {
         return view('students.create',['users' => user::all(),
-         'classes' => student_class::all()]);
+         'classes' => StudentClass::all()]);
     }
 
     /**
@@ -38,7 +39,7 @@ class StudentsController extends Controller
             'user_id' => 'required|exists:users_id',
         ]);
 
-        Students::create($validated);
+        Student::create($validated);
 
         return redirect()->route('students.index')
               ->with('success', 'Data siswa berhasil ditambahkan');
@@ -47,7 +48,7 @@ class StudentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Students $students)
+    public function show(Student $students)
     {
         return view('students.show', compact('student'));
     }
@@ -55,19 +56,19 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Students $students)
+    public function edit(Student $students)
     {
         return view('students.edit', [
             'student'=>$students,
             'users'=> User::all(),
-            'classes'=> Student_class::all(),
+            'classes'=> StudentClass::all(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Students $students)
+    public function update(Request $request, Student $students)
     {
         $validated = $request->validate([
             'student_id' => 'required|unique:students,student_id,' . $students->id,
@@ -85,7 +86,7 @@ class StudentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Students $students)
+    public function destroy(Student $students)
     {
         $students->delete();
 

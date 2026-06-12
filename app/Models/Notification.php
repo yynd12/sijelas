@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class notifications extends Model
+class Notification extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,6 @@ class notifications extends Model
     ];
 
     public function student(){
-        return $this->belongsTo(Students::class);
+        return $this->belongsTo(Student::class);
     }
 }

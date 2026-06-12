@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student_class;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 
 class StudentClassController extends Controller
@@ -12,7 +12,7 @@ class StudentClassController extends Controller
      */
     public function index()
     {
-        $classes = Student_class::all();
+        $classes = StudentClass::all();
 
         return view('student_classes.index', compact('classes'));
     }
@@ -35,7 +35,7 @@ class StudentClassController extends Controller
             'tahun_ajaran' => 'required',
         ]);
 
-        Student_class::create($validated);
+        StudentClass::create($validated);
 
         return redirect()->route('student_classes.index');
     }
@@ -44,7 +44,7 @@ class StudentClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student_class $student_class)
+    public function edit(StudentClass $student_class)
     {
         return view('student_classes.edit', compact('student_class'));
     }
@@ -52,7 +52,7 @@ class StudentClassController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student_class $student_class)
+    public function update(Request $request, StudentClass $student_class)
     {
         $student_class->update($request->validate([
             'nama_kelas' => 'required',
@@ -63,7 +63,7 @@ class StudentClassController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student_class $student_class)
+    public function destroy(StudentClass $student_class)
     {
         $student_class->delete();
 

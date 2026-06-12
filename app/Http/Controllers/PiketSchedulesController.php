@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piket_schedules;
-use App\Models\Student_class;
+use App\Models\PiketCchedule;
+use App\Models\PiketSchedule;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 
 class PiketSchedulesController extends Controller
@@ -13,7 +14,7 @@ class PiketSchedulesController extends Controller
      */
     public function index()
     {
-        $schedules = Piket_schedules::with('student_class')->get();
+        $schedules = PiketSchedule::with('student_class')->get();
 
         return view('piket_schedules.index', compact('schedules'));
     }
@@ -24,7 +25,7 @@ class PiketSchedulesController extends Controller
     public function create()
     {
         return view('piket_schedules.create', [
-            'classes' => Student_class::all()
+            'classes' => StudentClass::all()
         ]);
     }
 
@@ -39,7 +40,7 @@ class PiketSchedulesController extends Controller
             'anggota_piket' => 'required',
         ]);
 
-        Piket_schedules::create($validated);
+        PiketSchedule::create($validated);
 
         return redirect()->route('piket_schedules.index');
     }
@@ -47,7 +48,7 @@ class PiketSchedulesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Piket_schedules $piket_schedules)
+    public function show(PiketSchedule $piket_schedules)
     {
         //
     }
@@ -55,7 +56,7 @@ class PiketSchedulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Piket_schedules $piket_schedules)
+    public function edit(PiketSchedule $piket_schedules)
     {
         return view('piket_schedules.edit', compact("piket_schedules"));
     }
@@ -63,7 +64,7 @@ class PiketSchedulesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Piket_schedules $piket_schedules)
+    public function update(Request $request, PiketSchedule $piket_schedules)
     {
         $piket_schedules->update($request->all());
 
@@ -73,7 +74,7 @@ class PiketSchedulesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Piket_schedules $piket_schedules)
+    public function destroy(PiketSchedule $piket_schedules)
     {
         $piket_schedules->delete();
 

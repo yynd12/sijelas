@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payments extends Model
+class Payment extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,6 @@ class Payments extends Model
     ];
 
     public function cashBill(){
-        return $this->belongsTo(Cash_bills::class);
+        return $this->belongsTo(CashBill::class);
     }
 }

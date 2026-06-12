@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tasks;
-use App\Models\Student_class;
+use App\Models\StudentClass;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -13,7 +13,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = tasks::all();
+        $tasks = Task::all();
         
         return view('tasks.index', compact('tasks'));
     }
@@ -24,7 +24,7 @@ class TasksController extends Controller
     public function create()
     {
         return view('tasks.create', [
-            'classes' => Student_class::all()
+            'classes' => StudentClass::all()
         ]);
     }
 
@@ -40,7 +40,7 @@ class TasksController extends Controller
             'deadline' => 'required|date',
         ]);
 
-        tasks::create($validated);
+        Task::create($validated);
 
         return redirect()->route('tasks.index');
     }
@@ -48,7 +48,7 @@ class TasksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(tasks $tasks)
+    public function show(Task $tasks)
     {
         //
     }
@@ -56,7 +56,7 @@ class TasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(tasks $tasks)
+    public function edit(Task $tasks)
     {
         return view('tasks.edit', compact('task'));
     }
@@ -64,7 +64,7 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tasks $tasks)
+    public function update(Request $request, Task $tasks)
     {
         $tasks->update($request->all());
 
@@ -74,7 +74,7 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(tasks $tasks)
+    public function destroy(Task $tasks)
     {
         $tasks->delete();
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Piket_reports extends Model
+class PiketReport extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,6 @@ class Piket_reports extends Model
     ];
 
     public function student(){
-        return $this->belongsTo(Students::class);
+        return $this->belongsTo(Student::class);
     }
 }

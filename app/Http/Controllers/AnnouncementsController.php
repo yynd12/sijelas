@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\announcements;
-use App\Models\Class_teacher;
-use App\Models\Student_class;
+use App\Models\Announcement; 
+use App\Models\ClassTeacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class AnnouncementsController extends Controller
      */
     public function index()
     {
-        $announcements = announcements::all();
+        $announcements = Announcement::all();
 
         return view('announcements.index', compact('annocuncements'));
 
@@ -26,7 +25,7 @@ class AnnouncementsController extends Controller
      */
     public function create()
     {
-       $teachers = Class_teacher::all();
+       $teachers = ClassTeacher::all();
 
        return view('announcements.create', compact('teachers'));
     }
@@ -42,7 +41,7 @@ class AnnouncementsController extends Controller
             'isi' => 'required',
         ]);
 
-        announcements::create($validated);
+        Announcement::create($validated);
 
         return redirect()->route('announcements.index');
     }
@@ -50,7 +49,7 @@ class AnnouncementsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(announcements $announcements)
+    public function show(Announcement $announcements)
     {
         //
     }
@@ -58,7 +57,7 @@ class AnnouncementsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(announcements $announcements)
+    public function edit(Announcement $announcements)
     {
         return view('announcements.edit', compact('announcements'));
     }
@@ -66,7 +65,7 @@ class AnnouncementsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, announcements $announcements)
+    public function update(Request $request, Announcement $announcements)
     {
         $announcements->update($request->all());
 
@@ -76,7 +75,7 @@ class AnnouncementsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(announcements $announcements)
+    public function destroy(Announcement $announcements)
     {
         $announcements->delete();
 

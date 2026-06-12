@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cashes extends Model
+class Cash extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,10 @@ class Cashes extends Model
     ];
 
     public function studentClass(){
-        return $this->belongsTo(Student_class::class);
+        return $this->belongsTo(StudentClass::class);
     }
 
     public function cashBills(){
-        return $this->hasMany(Cash_bills::class);
+        return $this->hasMany(CashBill::class);
     }
 }

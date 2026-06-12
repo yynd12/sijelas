@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Piket_reports;
-use App\Models\Students;
+use App\Models\PiketReport;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class PiketReportsController extends Controller
@@ -13,7 +13,7 @@ class PiketReportsController extends Controller
      */
     public function index()
     {
-        $reports = Piket_reports::with('student')->get();
+        $reports = PiketReport::with('student')->get();
 
         return view('piket_report.imdex', compact('reports'));
     }
@@ -24,7 +24,7 @@ class PiketReportsController extends Controller
     public function create()
     {
         return view('piket_reports.create', [
-            'students' => Students::all()
+            'students' => Student::all()
         ]);
     }
 
@@ -39,7 +39,7 @@ class PiketReportsController extends Controller
             'keterangan' => 'required',
         ]);
 
-        Piket_reports::create($validated);
+        PiketReport::create($validated);
 
         return redirect()->route('piket_reports.index');
     }
@@ -47,7 +47,7 @@ class PiketReportsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Piket_reports $piket_reports)
+    public function show(PiketReport $piket_reports)
     {
         //
     }
@@ -55,7 +55,7 @@ class PiketReportsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Piket_reports $piket_reports)
+    public function edit(PiketReport $piket_reports)
     {
         //
     }
@@ -63,7 +63,7 @@ class PiketReportsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Piket_reports $piket_reports)
+    public function update(Request $request, PiketReport $piket_reports)
     {
         //
     }
@@ -71,7 +71,7 @@ class PiketReportsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Piket_reports $piket_reports)
+    public function destroy(PiketReport $piket_reports)
     {
         $piket_reports->delete();
 

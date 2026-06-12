@@ -23,14 +23,15 @@ protected $fillable = [
 
 protected $hidden = [
     'password',
+    'remember_token',
 ];
 
 public function student(){
-        return $this->hasOne(Students::class);
+        return $this->hasOne(Student::class);
     }
 
 public function classTeacher(){
-    return $this->hasOne(Class_teacher::class);
+    return $this->hasOne(ClassTeacher::class);
 }
     /**
      * Get the attributes that should be cast.

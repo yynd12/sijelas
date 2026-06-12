@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class announcements extends Model
+class Announcement extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,6 @@ class announcements extends Model
     ];
 
     public function classTeacher(){
-        return $this->belongsTo(Class_teacher::class);
+        return $this->belongsTo(ClassTeacher::class);
     }
 }

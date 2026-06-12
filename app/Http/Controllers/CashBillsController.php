@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cash_bills;
-use App\Models\Cashes;
-use App\Models\Students;
+use App\Models\CashBill;
+use App\Models\Cash;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class CashBillsController extends Controller
@@ -14,7 +14,7 @@ class CashBillsController extends Controller
      */
     public function index()
     {
-        $cash_bills = Cash_bills::with(['student', 'cashes'])->get();
+        $cash_bills = CashBill::with(['student', 'cashes'])->get();
 
         return view('cash_bills.index', compact('bills'));
     }
@@ -25,8 +25,8 @@ class CashBillsController extends Controller
     public function create()
     {
         return view('cash_bills.create', [
-            'students' => Students::all(),
-            'cashes' => Cashes::all(),
+            'students' => Student::all(),
+            'cashes' => Cash::all(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class CashBillsController extends Controller
             'status' => 'required',
         ]);
 
-        Cash_bills::create($validated);
+        CashBill::create($validated);
 
         return redirect()->route('cash_bills.index');
     }
@@ -50,7 +50,7 @@ class CashBillsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cash_bills $cash_bills)
+    public function show(CashBill $cash_bills)
     {
         //
     }
@@ -58,7 +58,7 @@ class CashBillsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cash_bills $cash_bills)
+    public function edit(CashBill $cash_bills)
     {
         return view('cash_bills.edit', compact('cash_bills'));
     }
@@ -66,7 +66,7 @@ class CashBillsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cash_bills $cash_bills)
+    public function update(Request $request, CashBill $cash_bills)
     {
         $cash_bills->update($request->all());
 
@@ -76,7 +76,7 @@ class CashBillsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cash_bills $cash_bills)
+    public function destroy(CashBill $cash_bills)
     {
         $cash_bills->delete();
 

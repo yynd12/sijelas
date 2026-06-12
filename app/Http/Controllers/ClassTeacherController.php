@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Class_teacher;
-use App\Models\Student_class;
+use App\Models\ClassTeacher;
+use App\Models\StudentClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class ClassTeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Class_teacher::with(['user', 'studentClass'])->get();
+        $teachers = ClassTeacher::with(['user', 'studentClass'])->get();
 
         return view('class_teachers.index', compact('teachers'));
     }
@@ -26,7 +26,7 @@ class ClassTeacherController extends Controller
     {
         return view('class_teachers.create', [
             'users' => User::all(),
-            'classes' => Student_class::all(),
+            'classes' => StudentClass::all(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class ClassTeacherController extends Controller
             'user_id' => 'required',
         ]);
 
-        Class_teacher::create($validated);
+        ClassTeacher::create($validated);
 
         return redirect()->route('class_teacher.index');
     }
@@ -50,7 +50,7 @@ class ClassTeacherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Class_teacher $class_teacher)
+    public function show(ClassTeacher $class_teacher)
     {
         //
     }
@@ -58,7 +58,7 @@ class ClassTeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Class_teacher $class_teacher)
+    public function edit(ClassTeacher $class_teacher)
     {
         return view('class_teachers.edit', compact('classTeacher'));
     }
@@ -66,7 +66,7 @@ class ClassTeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Class_teacher $class_teacher)
+    public function update(Request $request,ClassTeacher $class_teacher)
     {
         $class_teacher->update($request->all());
     }
@@ -74,7 +74,7 @@ class ClassTeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Class_teacher $class_teacher)
+    public function destroy(ClassTeacher $class_teacher)
     {
         $class_teacher->delete();
 

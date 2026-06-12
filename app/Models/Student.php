@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-class Students extends Model
+class Student extends Model
 {
     protected $fillable = [
         'student_id',
@@ -18,7 +18,7 @@ class Students extends Model
     ];
 
     public function student_class(){
-        return $this->belongsTo(Student_class::class);
+        return $this->belongsTo(StudentClass::class);
     }
 
     public function user(){
@@ -26,18 +26,18 @@ class Students extends Model
     }
 
     public function notifications(){
-        return $this->hasMany(notifications::class);
+        return $this->hasMany(Notifications::class);
     }
 
     public function piketReports(){
-        return $this->hasMany(Piket_reports::class);
+        return $this->hasMany(PiketReport::class);
     }
 
     public function cashBills(){
-        return $this->hasMany(Cash_bills::class);
+        return $this->hasMany(CashBill::class);
     }
 
     public function readings(){
-        return $this->hasMany(Readings::class);
+        return $this->hasMany(Reading::class);
     }
 }

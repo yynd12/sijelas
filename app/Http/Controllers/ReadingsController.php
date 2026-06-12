@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Readings;
-use App\Models\Students;
+use App\Models\Reading;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ReadingsController extends Controller
@@ -13,7 +13,7 @@ class ReadingsController extends Controller
      */
     public function index()
     {
-        $readings = Readings::with('student')->get();
+        $readings = Reading::with('student')->get();
 
         return view('readings.index', compact('readings'));
     }
@@ -24,7 +24,7 @@ class ReadingsController extends Controller
     public function create()
     {
         return view('readings.create', [
-            'students' => Students::all()
+            'students' => Student::all()
         ]);
     }
 
@@ -38,7 +38,7 @@ class ReadingsController extends Controller
             'bacaan_terakhir' => 'required',
         ]);
 
-        Readings::create($validated);
+        Reading::create($validated);
 
         return redirect()->route('readings.index');
     }
@@ -46,7 +46,7 @@ class ReadingsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Readings $readings)
+    public function show(Reading $readings)
     {
         //
     }
@@ -54,7 +54,7 @@ class ReadingsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Readings $readings)
+    public function edit(Reading $readings)
     {
         //
     }
@@ -62,7 +62,7 @@ class ReadingsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Readings $readings)
+    public function update(Request $request, Reading $readings)
     {
         //
     }
@@ -70,7 +70,7 @@ class ReadingsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Readings $readings)
+    public function destroy(Reading $readings)
     {
         $readings->delete();
 
