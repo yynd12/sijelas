@@ -1,6 +1,9 @@
 <?php
+use App\Models\Student;
+use App\Models\ClassTeacher;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -39,9 +42,22 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
  Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+   Route::get('/dashboard', function () {
+    $user = Auth::user();
+    // Hitung jumlah data
+    $totalSiswa = Student::count();
+    $totalWaliKelas = ClassTeacher::count();
+    if ($user->role == 'super_admin') {
+        return view('dashboard.superadmin', compact(
+            'totalSiswa',
+            'totalWaliKelas'
+        ));
+    }
+    if ($user->role == 'siswa') {
+        return view('dashboard.siswa');
+    }
+    abort(403);
+})->name('dashboard');
 
     // User Management
     Route::resource('users', UserController::class);
