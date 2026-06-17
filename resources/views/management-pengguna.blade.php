@@ -21,11 +21,11 @@
       <td>HELIA</td>
       <td>123456789</td>
       <td>XI RPL B</td>
-      <td>
-        <button class="btn btn-edit">Edit</button>
-        <button class="btn btn-detail">Detail</button>
-        <button class="btn btn-hapus">Hapus</button>
-      </td>
+      <td class="aksi">
+    <button class="btn btn-edit">Edit</button>
+    <button class="btn btn-detail">Detail</button>
+    <button class="btn btn-hapus">Hapus</button>
+</td>
     </tr>
 
   </table>
