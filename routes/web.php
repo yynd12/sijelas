@@ -37,7 +37,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -81,5 +81,9 @@ Route::middleware('auth')->group(function () {
 
     // Readings
     Route::resource('readings', ReadingsController::class);
+ });
+
+Route::get('/management-pengguna', function () {
+    return view('management-pengguna');
 });
 
