@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,7 +12,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return view('management-pengguna', compact('users'));
     }
 
     /**
@@ -19,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -27,7 +30,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'teacher_id' => 'required',
+            'kelas' => 'required',
+        ]);
+
+        User::create([
+            'nama' => $request->nama,
+            'teacher_id' => $request->teacher_id,
+            'kelas' => $request->kelas,
+        ]);
+
+        return redirect()->route('users.index')->with('succes', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -35,7 +50,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrfail($id);
+
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -43,7 +60,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrfail($id);
+
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -51,7 +70,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'nip' => 'required',
+            'kelas' => 'required'
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'kelas' => $request->kelas
+        ]);
+
+        return redirect()->route('users.index')
+                         ->with('success', 'Data berhasil diupdate');
     }
 
     /**
@@ -59,6 +93,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->route('users.index')
+                         ->with('success', 'Data berhasil dihapus');
+    
     }
 }

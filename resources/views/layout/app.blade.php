@@ -122,6 +122,8 @@
             border-bottom:1px solid #ddd;
         }
 
+        
+
         .btn{
             border:none;
             padding:5px 10px;
@@ -174,7 +176,7 @@ td:last-child{
 
     <div class="wrapper">
 
-        <div class="sidebar" id="sidebar">
+        <div class="sidebar hide" id="sidebar">
             <ul>
                 <li>
                     <a href="/dashboard">
