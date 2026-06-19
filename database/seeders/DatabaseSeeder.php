@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
 
         ClassTeacher::create([
             'nama' => 'Bapak Andi',
-            'teacher_i' => '19870001',
+            'teacher_id' => '19870001',
             'student_class_id' => $kelas1->id,
             'user_id' => $wali1->id
         ]);
@@ -131,25 +131,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Student::create([
-            'student_id' => '003',
+            'student_id' => '004',
             'nama' => 'Alya',
             'jabatan' => 'sekretaris',
-            'student_class_id' => '$kelas1->id,',
-            'user_id' => '$sekretaris->id,',
+            'student_class_id' => '$kelas1->id',
+            'user_id' => '$sekretaris->id',
             ]);
         Student::create([
             'student_id' => '005',
             'nama' => 'Nabila',
             'jabatan' => 'sie_kerohanian',
-            'student_class_id' => '$kelas1->id,',
-            'user_id' => '$kerohanian->id,',
+            'student_class_id' => '$kelas1->id',
+            'user_id' => '$kerohanian->id',
             ]);
         Student::create([
             'student_id' => '006',
             'nama' => 'Dimas',
             'jabatan' => 'sie_kebersihan',
-            'student_class_id' => '$kelas1->id,',
-            'user_id' => '$->id,',
+            'student_class_id' => '$kelas1->id',
+            'user_id' => '$kebersihan->id',
             ]);
     }
 }
